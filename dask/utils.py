@@ -145,6 +145,7 @@ def _deprecated(
 
 def _deprecated_kwarg(
     old_arg_name: str,
+def deprecate_keyword_argument(
     new_arg_name: str | None = None,
     mapping: Mapping[Any, Any] | Callable[[Any], Any] | None = None,
     stacklevel: int = 2,
@@ -152,6 +153,42 @@ def _deprecated_kwarg(
 ) -> Callable[[F], F]:
     """
     Decorator to deprecate a keyword argument of a function.
+    Args:
+        new_arg_name: The name of the new argument that replaces the deprecated keyword argument.
+        mapping: A mapping or a callable that maps the deprecated keyword argument to the new argument.
+        stacklevel: The stack level at which to raise the warning.
+        comment: A comment to add to the warning message.
+    Returns:
+        A decorator that deprecates a keyword argument of a function.
+    """
+    def decorator(func: F) -> F:
+        """
+        Decorator to deprecate a keyword argument of a function.
+        Args:
+            func: The function to decorate.
+        Returns:
+            The decorated function.
+        """
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            """
+            Wrapper function to deprecate a keyword argument of a function.
+            Args:
+                args: The positional arguments of the function.
+                kwargs: The keyword arguments of the function.
+            Returns:
+                The result of the function.
+            """
+            if new_arg_name is not None and new_arg_name in kwargs and mapping is not None:
+                if isinstance(mapping, Mapping):
+                    kwargs[new_arg_name] = mapping[kwargs[new_arg_name]]
+                else:
+                    kwargs[new_arg_name] = mapping(kwargs[new_arg_name])
+            warnings.warn(f"'{func.__name__}' is deprecated since {stacklevel}. {comment}",
+                          category=DeprecationWarning, stacklevel=stacklevel)
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
     Parameters
     ----------
