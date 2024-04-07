@@ -153,6 +153,12 @@ def _deprecated_kwarg(
     """
     Decorator to deprecate a keyword argument of a function.
 
+    :param new_arg_name: The name of the new argument to use instead of the deprecated argument.
+    :param mapping: The mapping of the deprecated argument to the new argument.
+    :param stacklevel: The stack level to use when calling ``warnings.warn``.
+    :param comment: The comment to use when calling ``warnings.warn``.
+    :return: The decorated function.
+
     Parameters
     ----------
     old_arg_name : str
