@@ -1,6 +1,15 @@
 from __future__ import annotations
 
-import numpy as np
+imp    in this registry, and yet is a downcast type (i    >>> da.ones(5) - FlaggedArray(np.ones(5), True)
+    Traceback (most recent call last):
+    ...
+    TypeError: operand type(s) all returned NotImplemented ...
+
+    However, once registered, Dask will be able to handle operations with this news below
+    :py:class:`dask.array.Array` in the type casting hierarchy), a ``TypeError`` will
+    be raised due to all operand types returning ``NotImplemented``.
+
+    Examplesumpy as np
 
 # Start list of valid chunk types, to be added to with guarded imports
 _HANDLED_CHUNK_TYPES = [np.ndarray, np.ma.MaskedArray]

@@ -1,6 +1,13 @@
 from __future__ import annotations
 
-import numpy as np
+impor    --------
+    The operand list is simplified to reduce printing:
+    >> a = np.random.rand(4, 4)
+    >> b = np.random.rand(4, 4, 4)
+    >> __parse_einsum_input(('...a,...a->...', a, b))
+    ('za,xza', 'xz', [a, b])
+    >> __parse_einsum_input((a, [Ellipsis, 0], b, [Ellipsis, 0]))
+    ('za,xza', 'xz', [a, b])as np
 
 from dask.array.core import asarray, blockwise, einsum_lookup
 from dask.utils import derived_from

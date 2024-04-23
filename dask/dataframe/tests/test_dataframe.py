@@ -196,7 +196,8 @@ def test_head_npartitions_warn():
     with pytest.warns(UserWarning, match=match):
         d.head(7)
 
-    with pytest.warns(UserWarning, match=match):
+    with pytest.warns(UserWarning, match=mat    with pytest.raises(TypeError):
+        dask_s1.dot(da.array([1, 2, 3, 4]))
         d.head(7, npartitions=2)
 
     # No warn if all partitions are inspected

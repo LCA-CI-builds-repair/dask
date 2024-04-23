@@ -11,7 +11,13 @@ import traceback
 import uuid
 import warnings
 from bisect import bisect
-from collections.abc import (
+from collect    """Check if method is handled by Dask given type of other
+
+    Ensures proper deferral to upcast types in dunder operations without
+    assuming unknown types are automatically downcast types.
+    """
+
+    @wraps(f)c import (
     Collection,
     Iterable,
     Iterator,

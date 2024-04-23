@@ -133,7 +133,11 @@ def _numeric_only(func):
 
 def _numeric_data(func):
     """Modified version of the above decorator, right now only used with std. We don't
-    need raising NotImplementedError there, because it's handled by
+    need raising NotImplementedError there, be    def dot(self, other, meta=no_default):
+        if not isinstance(other, _Frame):
+            raise TypeError("The second operand must be a dask array or dask dataframe")
+
+        if isinstance(other, DataFrame): it's handled by
     _numeric_only_maybe_warn instead. This is a temporary solution that needs
     more time to be generalized."""
 

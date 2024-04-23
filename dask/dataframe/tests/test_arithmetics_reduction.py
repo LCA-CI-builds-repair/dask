@@ -45,7 +45,10 @@ def test_arithmetics():
     dsk = {
         ("x", 0): pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]}, index=[0, 1, 3]),
         ("x", 1): pd.DataFrame({"a": [4, 5, 6], "b": [3, 2, 1]}, index=[5, 6, 8]),
-        ("x", 2): pd.DataFrame({"a": [7, 8, 9], "b": [0, 0, 0]}, index=[9, 9, 9]),
+        ("x", 2): pd.DataFrame({"a": [7, 8, 9], "b": [0,     # TypeError: unsupported operand type(s) for *: 'float' and 'Timedelta'
+    # assert_eq(dds.mean(), pds.mean())
+
+    assert_eq(dds.nunique(), pds.nunique()), index=[9, 9, 9]),
     }
     meta = make_meta(
         {"a": "i8", "b": "i8"}, index=pd.Index([], "i8"), parent_meta=pd.DataFrame()

@@ -34,7 +34,12 @@ from dask.array.utils import (
     compute_meta,
     is_arraylike,
     meta_from_array,
-    validate_axis,
+    vali        Type to use in computing the moment. For arrays of integer type the
+        default is float64; for arrays of float types it is the same as the
+        array type.
+    keepdims : bool, optional
+        If this is set to True, the axes which are reduced are left in the
+        result as dimensions with size one. With this option, the resultxis,
 )
 from dask.array.wrap import ones, zeros
 from dask.base import tokenize
