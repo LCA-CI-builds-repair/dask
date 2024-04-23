@@ -9,7 +9,32 @@ from timeit import default_timer
 from dask.callbacks import Callback
 from dask.utils import import_required
 
-# Stores execution data for each task
+from dask.callbacks import Callback
+
+# Add any necessary imports for Callback and other libraries
+
+class CacheProfiler(Callback):
+    """A profiler for dask execution at the scheduler cache level.
+
+    Records the following information for each task:
+        1. Key
+        2. Task
+        3. Size metric
+        4. Cache entry time in seconds since the epoch
+        5. Cache exit time in seconds since the epoch
+    """
+    
+    def __init__(self):
+        # Add any necessary initialization code here
+        pass
+    
+    def start(self, dsk):
+        # Add start method implementation here
+        pass
+    
+    def finish(self, dsk, state, id):
+        # Add finish method implementation here
+        passtion data for each task
 TaskData = namedtuple(
     "TaskData", ("key", "task", "start_time", "end_time", "worker_id")
 )

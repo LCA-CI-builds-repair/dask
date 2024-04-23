@@ -133,7 +133,26 @@ def _numeric_only(func):
 
 def _numeric_data(func):
     """Modified version of the above decorator, right now only used with std. We don't
-    need raising NotImplementedError there, because it's handled by
+    need raising NotImplementedError there, befrom dask.dataframe.core import DataFrame
+
+    def dot(self, other, meta=no_default):
+        if not isinstance(other, _Frame):
+            raise TypeError("The second operand must be a dask array or dask dataframe")
+
+        if isinstance(other, DataFrame):
+            s = self.map_partitions(M.dot, other, token="dot", meta=meta)
+            return s.groupby(by=s.index).apply(
+                lambda x: x.sum(skipna=False), meta=s._meta_nonempty
+            )
+
+        def _dot_series(*args, **kwargs):
+            # .sum() is invoked on each partition before being applied to all
+            # partitions. The return type is expected to be a series, not a numpy object
+            return meta_series_constructor(self)(M.dot(*args, **kwargs))
+
+        return self.map_partitions(_dot_series, other, token="dot", meta=meta).sum(
+            skipna=False
+        ) by
     _numeric_only_maybe_warn instead. This is a temporary solution that needs
     more time to be generalized."""
 
