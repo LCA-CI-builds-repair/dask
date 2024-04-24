@@ -7,8 +7,47 @@ from packaging.version import parse as parse_version
 pytestmark = pytest.mark.gpu
 
 import dask
+import dask.arimport cupy
+import numpy as nimport cupy
+import numpy as np
 import dask.array as da
 from dask.array.utils import assert_eq
+
+assert type(result._meta) == cupy.ndarray
+assert_eq(result, result)  # Check that _meta and computed arrays match types
+assert_eq(result, x.view("i2"))
+
+assert all(isinstance(s, int) for s in d.shape)
+
+x = np.arange(8, dtype="i1")
+d = da.from_array(cupy.array(x), chunks=(4,))
+result = d.view("i4")
+assert type(result._meta) == cupy.ndarray
+assert_eq(result, result)  # Check that _meta and computed arrays match typesask.array as da
+from dask.array.utils import assert_eq
+
+res_cp = da.core._vindex(d_cp, [0, 1, 6, 0], [0, 1, 0, 7])
+
+assert type(res_cp._meta) == cupy.ndarray
+assert_eq(
+    res_cp, res_cp
+)  # Check that _meta and computed arrays match types
+
+assert_eq(res_np, res_cp)
+
+def test_view():
+    x = np.arange(56).reshape((7, 8))
+    d = da.from_array(cupy.array(x), chunks=(2, 3))
+
+    result = d.view()
+    assert type(result._meta) == cupy.ndarray
+    assert_eq(result, result)  # Check that _meta and computed arrays match types
+    assert_eq(result, x.view())
+
+    result = d.view("i4")
+    assert type(result._meta) == cupy.ndarray
+    assert_eq(result, result)  # Check that _meta and computed arrays match types
+    assert_eq(result, x.view("i4"))ay.utils import assert_eq
 from dask.sizeof import sizeof
 
 cupy = pytest.importorskip("cupy")

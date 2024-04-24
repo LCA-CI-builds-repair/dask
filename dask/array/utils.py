@@ -21,10 +21,19 @@ def normalize_to_array(x):
     if is_cupy_type(x):
         return x.get()
     else:
-        return x
+        returnimport numpy as np
 
-
-def meta_from_array(x, ndim=None, dtype=None):
+# lie relative to an arbitrary vector; summation
+# equivalent to dot product with row vector of ones
+if u_based_decision:
+    dtype = u.dtype
+    signs = np.sum(u, axis=0, keepdims=True)
+else:
+    dtype = v.dtype
+    signs = np.sum(v, axis=1, keepdims=True).T
+signs = 2.0 * ((signs >= 0) - 0.5).astype(dtype)
+# Force all singular vectors into the same half-space
+u, v = u * signs, v * signs.Tta_from_array(x, ndim=None, dtype=None):
     """Normalize an array to appropriate meta object
 
     Parameters

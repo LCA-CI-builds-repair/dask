@@ -10,8 +10,22 @@ import sys
 import traceback
 import uuid
 import warnings
-from bisect import bisect
-from collections.abc import (
+from bisect impdef _should_delegate(self, other) -> bool:
+    """Check whether Dask should delegate to the other.
+    This implementation follows NEP-13:
+    https://numpy.org/neps/nep-0013-ufunc-overrides.html#behavior-in-combination-with-python-s-binary-operations
+    """
+    if hasattr(other, "__array_ufunc__") and other.__array_ufunc__ is None:
+        return True
+    elif (
+        hasattr(other, "__array_ufunc__")
+        and not is_valid_array_chunk(other)
+        # Don't delegate to our own parent classes
+        and not isinstance(self, type(other))
+        and type(self) is not type(other)
+    ):
+        return True
+    return Falseections.abc import (
     Collection,
     Iterable,
     Iterator,
@@ -109,7 +123,39 @@ def getter(a, b, asarray=True, lock=None):
         b3 = tuple(
             None if x is None else slice(None, None)
             for x in b
-            if not isinstance(x, Integral)
+    Parameters
+    ----------
+    arr: dask.array
+        Data to store
+    url: Zarr Array or str or MutableMapping
+        Location of the data. A URL can include a protocol specifier like s3://
+        for remote data. Can also be any MutableMapping instance, which should
+        be serializable if used in multiple processes.
+    component: str or None
+        If the location is a zarr group rather than an array, this is the
+        subcomponent that should be created/over-written.
+    storage_options: dict
+        Any additional parameters for the storage backend (ignored for local paths)
+    overwrite: bool
+        If the given array already exists, overwrite=False will cause an error,
+        where overwrite=True will replace the existing data.
+    region: tuple of slices or None
+        The region of data that should be written if ``url`` is a zarr.Array.
+        Not to be used with other types of ``url``.
+    compute: bool
+        See :func:`~dask.array.store` for more details.
+    return_stored: bool
+        See :func:`~dask.array.store` for more details.
+    **kwargs:
+        Passed to the :func:`zarr.creation.create` function, e.g., compression options.
+
+    Raises
+    ------
+    NotImplementedError:
+        If the specified operation is not implemented.
+    ValueError:
+        If invalid input is provided.
+    ...(x, Integral)
         )
         return getter(a, b2, asarray=asarray, lock=lock)[b3]
 

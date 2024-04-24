@@ -19,8 +19,26 @@ from dask.array.core import (
     normalize_chunks,
     slices_from_chunks,
 )
-from dask.array.creation import arange
-from dask.array.utils import asarray_safe
+from dask.array.creatio    >>> import dask.array as da
+    >>> rng = da.random.default_rng(seed=42)
+    >>> print(rng)
+    Generator(PCG64)
+    >>> arr1 = rng.random((3, 3)).compute()
+    >>> arr1
+    array([[0.91674416, 0.91098667, 0.8765925 ],
+           [0.30931841, 0.95465607, 0.17509458],
+           [0.99662814, 0.75203348, 0.15038118]])
+
+    # Demonstrate reproducibility of random number generation with the same seed
+    # Even after restarting the Python interpreter, the same random numbers are generated
+
+    >>> import dask.array as da
+    >>> rng = da.random.default_rng(seed=42)
+    >>> arr2 = rng.random((3, 3)).compute()
+    >>> arr2
+    array([[0.91674416, 0.91098667, 0.8765925 ],
+           [0.30931841, 0.95465607, 0.17509458],
+           [0.99662814, 0.75203348, 0.15038118]])dask.array.utils import asarray_safe
 from dask.base import tokenize
 from dask.highlevelgraph import HighLevelGraph
 from dask.utils import derived_from, random_state_data, typename

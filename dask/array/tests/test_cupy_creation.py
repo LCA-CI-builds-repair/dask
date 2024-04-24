@@ -1,5 +1,26 @@
-from __future__ import annotations
+from __future__ import cupy
+import dask.array as da
+from dask.array.utils import assert_eq
 
+v = cupy.arange(11)
+dv = da.from_array(v, chunks=(4,), asarray=False)
+assert type(dv._meta) == cupy.ndarray
+assert_eq(dv, dv)  # Check that _meta and computed arrays match types
+assert_eq(da.diag(dv), cupy.diag(v))
+
+v = v + v + 3
+dv = dv + dv + 3
+darr = da.diag(dv)
+cupyarr = cupy.diag(v)
+assert type(darr._meta) == cupy.ndarray
+assert_eq(darr, darr)  # Check that _meta and computed arrays match types
+assert_eq(darr, cupyarr)
+
+x = cupy.arange(64).reshape((8, 8))
+dx = da.from_array(x, chunks=(4, 4), asarray=False)
+assert type(dx._meta) == cupy.ndarray
+assert_eq(dx, dx)  # Check that _meta and computed arrays match types
+assert_eq(da.diag(dx), cupy.diag(x))
 import numpy as np
 import pytest
 

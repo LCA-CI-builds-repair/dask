@@ -10,8 +10,28 @@ from dask.array.utils import meta_from_array
 from dask.core import flatten
 from dask.highlevelgraph import HighLevelGraph
 
-# Modified version of `numpy.lib.function_base._parse_gufunc_signature`
-# Modifications:
+# Modified version of `numpy.lib.function_base._par    if vectorize:
+        otypes = [x.dtype for x in meta] if isinstance(meta, tuple) else [meta.dtype]
+        func = np.vectorize(func, signature=signature, otypes=otypes)
+
+    ## Miscellaneous
+    if output_sizes is None:
+        output_sizes = {}
+
+    ## Axes
+    input_axes, output_axes = _validate_normalize_axes(
+        axes, axis, keepdims, input_coredimss, output_coredimss
+    )
+
+    # Main code:
+    ## Cast all input arrays to dask
+    args = [asarray(a) for a in args]
+
+    if len(input_coredimss) != len(args):
+        raise ValueError(
+            "Mismatch in the number of arguments provided. Expected %d arguments, but %d given."
+            % (len(input_coredimss), len(args))
+        ) Modifications:
 #   - Allow for zero input arguments
 # See https://docs.scipy.org/doc/numpy/reference/c-api/generalized-ufuncs.html
 _DIMENSION_NAME = r"\w+"

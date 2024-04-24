@@ -1,6 +1,37 @@
-from __future__ import annotations
+from __future__ import ann    properly defer to each other in arithmetic operations and    other:
 
-import numpy as np
+    >>> import dask.array as da
+    >>> da.ones(5) - FlaggedArray(np.ones(5), True)
+    Traceback (most recent call last):
+    ...
+    TypeError: operand type(s) all returned NotImplemented ...
+
+    However, once registered, Dask will be able to handle operations with this new type:
+
+    >>> da.register_chunk_type(FlaggedArray)
+    >>> x = da.ones(5) - FlaggedArray(np.ones(5), True)
+    >>> x
+    dask.array<sub, shape=(5,), dtype=float64, chunksize=(5,), chunktype=dask.FlaggedArray>
+    >>> x.compute()
+    Flag: True, Array: array([0., 0., 0., 0., 0.])
+
+    Append the new chunk type to the list of handled chunk types for Dask:
+    _HANDLED_CHUNK_TYPES.append(type)ncs
+    according to a well-defined type casting hierarchy (
+    `see NEP 13 <https://numpy.org/neps/nep-0013-ufunc-overrides.html#type-casting-hierarchy>`__
+    ). In an effort to maintain this hierarchy, Dask defers to all other duck array
+    types except those in its internal registry. By default, this registry contains:
+
+    - :py:class:`numpy.ndarray`
+    - :py:class:`numpy.ma.MaskedArray`
+    - :py:class:`cupy.ndarray`
+    - :py:class:`sparse.SparseArray`
+    - :py:class:`scipy.sparse.spmatrix`
+
+    This function exists to append any other types to this registry. If a type is not
+    in this registry, and yet is a downcast type (it comes below
+    :py:class:`dask.array.Array` in the type casting hierarchy), a ``TypeError`` will
+    be raised due to all operand types returning ``NotImplemented``. numpy as np
 
 # Start list of valid chunk types, to be added to with guarded imports
 _HANDLED_CHUNK_TYPES = [np.ndarray, np.ma.MaskedArray]

@@ -11,8 +11,36 @@ import tempfile
 import types
 import uuid
 import warnings
-from collections.abc import Hashable, Iterable, Iterator, Mapping, Set
-from contextlib import contextmanager, nullcontext, suppress
+from collections.abc import Hashable, Iterable,                        f"The {repr(old_arg_name)} keyword is deprecated and "
+                        "will be removed in a future version. Please update "
+                        f"to use {repr(new_arg_name)} instead."
+                    ) + comment
+                    warnings.warn(ms    array([0, 2, 0, 3, 0, 1, 2, 1, 0, 0], dtype=int8)
+    
+    # Import necessary libraries for the code snippet
+    import numpy as nputureWarning, stacklevel=stacklevel)
+                    kwargs[new_arg_name] = old_arg_value
+                    return func(*args, **kwargs)
+
+                elif mapping is not None:
+                    if callable(mapping):
+                        new_arg_value = mapping(old_arg_value)
+                    else:
+                        new_arg_value = mapping.get(old_arg_value, old_arg_value)
+                    msg = (
+                        f"The {old_arg_name}={repr(old_arg_value)} keyword is "
+                        "deprecated. Please use "
+                        f"{new_arg_name}={repr(new_arg_value)} instead."
+                    )
+                else:
+                    new_arg_value = old_arg_value
+                    msg = (
+                        f"The {repr(old_arg_name)} keyword is deprecated. "
+                        f"Please use {repr(new_arg_name)} instead."
+                    )
+
+                warnings.warn(msg + comment, FutureWarning, stacklevel=stacklevel)
+                if kwargs.get(new_arg_name) is not None:m contextlib import contextmanager, nullcontext, suppress
 from datetime import datetime, timedelta
 from errno import ENOENT
 from functools import lru_cache, wraps

@@ -2,7 +2,34 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
-from numpy.testing import assert_equal
+fromimport pytest
+
+def test__validate_normalize_axes_01():
+    with pytest.raises(ValueError):
+        _validate_normalize_axes([(1, 0)], None, False, [("i", "j")], ("j",))
+
+    with pytest.raises(ValueError):
+        _validate_normalize_axes([(0, 0)], None, False, [("i", "j")], ("j",))
+
+    with pytest.raises(ValueError):
+        _validate_normalize_axes([(0,), 0], None, False, [("i", "j")], ("j",))
+
+    i, o = _validate_normalize_axes([(1, 0), 0], None, False, [("i", "j")], ("j",))
+    assert i == [(1, 0)]
+    assert o == [(0,)]
+
+def test__validate_normalize_axes_02():
+    i, o = _validate_normalize_axes(None, 0, False, [("i",), ("i",)], ())
+    assert i == [(0,), (0,)]
+    assert o == [()]
+
+    i, o = _validate_normalize_axes(None, 0, False, [("i",)], ("i",))
+    assert i == [(0,)]
+    assert o == [(0,)]
+
+    i, o = _validate_normalize_axes(None, 0, True, [("i",), ("i",)], ())
+    assert i == [(0,), (0,)]
+    assert o == [(0,)]rt_equal
 
 import dask.array as da
 from dask.array.core import Array
