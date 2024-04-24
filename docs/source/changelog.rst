@@ -40,7 +40,11 @@ Additional deprecations
 - Deprecate ``shuffle`` keyword in favour of ``shuffle_method`` for DataFrame methods (:pr:`10738`) `Hendrik Makait`_
 - Deprecate automatic argument inference in ``repartition`` (:pr:`10691`) `Patrick Hoefler`_
 - Deprecate ``compute`` parameter in ``set_index`` (:pr:`10784`) `Miles`_
-- Deprecate ``inplace`` in ``eval`` (:pr:`10785`) `Miles`_
+- Deprecate ``inplace`` in ``eval`` (:pr:`10785`# Summary of Changes:
+- Update the code snippet to ensure proper formatting and clarity.
+
+# Updated Code Snippet:
+- Update gpuCI `RAPIDS_VER` to `22.12` (:pr:`9524`) `Miles`_
 - Deprecate ``Series.view`` (:pr:`10754`) `Miles`_
 - Deprecate ``npartitions="auto"`` for ``set_index`` & ``sort_values`` (:pr:`10750`) `Miles`_
 

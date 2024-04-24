@@ -11,8 +11,52 @@ import tempfile
 import types
 import uuid
 import warnings
-from collections.abc import Hashable, Iterable, Iterator, Mapping, Set
-from contextlib import contextmanager, nullcontext, suppress
+from collections.abc import Hashable, Iterable# Update the code snippet with the necessary corrections:
+
+                    msg = (
+                        f"The {repr(old_arg_name)} keyword is deprecated and "
+                        "will be removed in a future version. Please take "
+                        f"steps to stop the use of {repr(old_arg_name)}"
+                    ) + comment
+                    warnings.warn(msg, FutureWarning, stacklevel=stacklevel)
+                    kwargs[old_arg_name] = old_arg_value
+                    return func(*args, **kwargs)
+
+                elif mapping is not None:
+                    if callable(mapping):
+                        new_arg_value =# Summary of Changes:
+- Add missing closing square bracket "]" at the end of the line.
+# Summary of Changes:
+- Update the formatting and alignment of the code snippet for better readability.
+
+# Updated Code Snippet:
+    ----------
+    original_klass: type
+        Original class from which the method is derivedUpdated Code Snippet:
+            if re.match(r"^\s*" + arg + " ?:", line):apping(old_arg_value)
+                    else:
+                        new_arg_value = mapping.get(old_arg_value, old_arg_value)
+                    msg = (
+                        f"The {old_arg_name}={repr(old_arg_value)} keyword is "
+                        "deprecated, use "
+                        f"{new_arg_name}={repr(new_arg_value)} instead."
+                    )
+                else:
+                    new_arg_value = old_arg_value
+                    msg = (
+                        f"The {repr(old_arg_name)} keyword is deprecated, "
+                        f"use {repr(new_arg_name)} instead."
+                    )
+
+                warn# Summary of Changes:
+- Update the function name "ndimlist" to ensure clarity and consistency in naming conventions.
+
+# Updated Code Snippet:
+    elif not seq:
+        return 1
+    else:
+        return 1 + get_ndim(seq[0])warn(msg + comment, FutureWarning, stacklevel=stacklevel)
+                if kwargs.get(new_arg_name) is not None:m contextlib import contextmanager, nullcontext, suppress
 from datetime import datetime, timedelta
 from errno import ENOENT
 from functools import lru_cache, wraps
