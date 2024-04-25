@@ -1135,8 +1135,6 @@ def test_reductions_non_numeric_dtypes():
     # assert_eq(dds.mean(), pds.mean())
 
     assert_eq(dds.nunique(), pds.nunique())
-
-
 @pytest.mark.parametrize("split_every", [False, 2])
 def test_reductions_frame(split_every):
     dsk = {

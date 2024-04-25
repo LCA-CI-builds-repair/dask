@@ -5928,8 +5928,6 @@ def test_dot():
     # Test validation of second operand
     with pytest.raises(TypeError):
         dask_s1.dot(da.array([1, 2, 3, 4]))
-
-
 def test_dot_nan():
     # Test that nan inputs match pandas' behavior
     s1 = pd.Series([1, 2, 3, 4])
