@@ -229,7 +229,7 @@ def _deprecated_kwarg(
             if old_arg_value is not no_default:
                 if new_arg_name is None:
                     msg = (
-                        f"the {repr(old_arg_name)} keyword is deprecated and "
+f"the {repr(old_arg_name)} keyword is deprecated and "
                         "will be removed in a future version. Please take "
                         f"steps to stop the use of {repr(old_arg_name)}"
                     ) + comment
@@ -255,7 +255,7 @@ def _deprecated_kwarg(
                     )
 
                 warnings.warn(msg + comment, FutureWarning, stacklevel=stacklevel)
-                if kwargs.get(new_arg_name) is not None:
+if kwargs.get({new_arg_name}) is not None:
                     msg = (
                         f"Can only specify {repr(old_arg_name)} "
                         f"or {repr(new_arg_name)}, not both."
