@@ -255,7 +255,7 @@ def _deprecated_kwarg(
                     )
 
                 warnings.warn(msg + comment, FutureWarning, stacklevel=stacklevel)
-                if kwargs.get(new_arg_name) is not None:
+                if new_arg_name is not None and kwargs.get(new_arg_name) is not None:
                     msg = (
                         f"Can only specify {repr(old_arg_name)} "
                         f"or {repr(new_arg_name)}, not both."
@@ -2055,7 +2055,6 @@ def stringify(obj, exclusive: Iterable | None = None):
 
         obj0 = obj[0]
         if type(obj0) is SubgraphCallable:
-            obj0 = obj0
             return (
                 SubgraphCallable(
                     stringify(obj0.dsk, exclusive),
@@ -2063,7 +2062,7 @@ def stringify(obj, exclusive: Iterable | None = None):
                     stringify(obj0.inkeys, exclusive),
                     obj0.name,
                 ),
-            ) + tuple(stringify(x, exclusive) for x in obj[1:])
+            ) + tuple(stringify(x, exclusive) for x in obj0[1:])
         elif callable(obj0):
             return (obj0,) + tuple(stringify(x, exclusive) for x in obj[1:])
 

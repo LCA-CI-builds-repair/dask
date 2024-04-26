@@ -31,70 +31,7 @@ def register_chunk_type(type):
     types except those in its internal registry. By default, this registry contains
 
     * :py:class:`numpy.ndarray`
-    * :py:class:`numpy.ma.MaskedArray`
-    * :py:class:`cupy.ndarray`
-    * :py:class:`sparse.SparseArray`
-    * :py:class:`scipy.sparse.spmatrix`
 
-    This function exists to append any other types to this registry. If a type is not
-    in this registry, and yet is a downcast type (it comes below
-    :py:class:`dask.array.Array` in the type casting hierarchy), a ``TypeError`` will
-    be raised due to all operand types returning ``NotImplemented``.
-
-    Examples
-    --------
-    Using a mock ``FlaggedArray`` class as an example chunk type unknown to Dask with
-    minimal duck array API:
-
-    >>> import numpy.lib.mixins
-    >>> class FlaggedArray(numpy.lib.mixins.NDArrayOperatorsMixin):
-    ...     def __init__(self, a, flag=False):
-    ...         self.a = a
-    ...         self.flag = flag
-    ...     def __repr__(self):
-    ...         return f"Flag: {self.flag}, Array: " + repr(self.a)
-    ...     def __array__(self):
-    ...         return np.asarray(self.a)
-    ...     def __array_ufunc__(self, ufunc, method, *inputs, **kwargs):
-    ...         if method == '__call__':
-    ...             downcast_inputs = []
-    ...             flag = False
-    ...             for input in inputs:
-    ...                 if isinstance(input, self.__class__):
-    ...                     flag = flag or input.flag
-    ...                     downcast_inputs.append(input.a)
-    ...                 elif isinstance(input, np.ndarray):
-    ...                     downcast_inputs.append(input)
-    ...                 else:
-    ...                     return NotImplemented
-    ...             return self.__class__(ufunc(*downcast_inputs, **kwargs), flag)
-    ...         else:
-    ...             return NotImplemented
-    ...     @property
-    ...     def shape(self):
-    ...         return self.a.shape
-    ...     @property
-    ...     def ndim(self):
-    ...         return self.a.ndim
-    ...     @property
-    ...     def dtype(self):
-    ...         return self.a.dtype
-    ...     def __getitem__(self, key):
-    ...         return type(self)(self.a[key], self.flag)
-    ...     def __setitem__(self, key, value):
-    ...         self.a[key] = value
-
-    Before registering ``FlaggedArray``, both types will attempt to defer to the
-    other:
-
-    >>> import dask.array as da
-    >>> da.ones(5) - FlaggedArray(np.ones(5), True)
-    Traceback (most recent call last):
-    ...
-    TypeError: operand type(s) all returned NotImplemented ...
-
-    However, once registered, Dask will be able to handle operations with this new
-    type:
 
     >>> da.register_chunk_type(FlaggedArray)
     >>> x = da.ones(5) - FlaggedArray(np.ones(5), True)
