@@ -91,8 +91,7 @@ def register_chunk_type(type):
     >>> da.ones(5) - FlaggedArray(np.ones(5), True)
     Traceback (most recent call last):
     ...
-    TypeError: operand type(s) all returned NotImplemented ...
-
+    TypeError: operand type(s) all returned NotImplemented, operation not supported
     However, once registered, Dask will be able to handle operations with this new
     type:
 

@@ -82,12 +82,12 @@ def apply(func, args, kwargs=None):
 
 def _deprecated(
     *,
-    version: str | None = None,
-    after_version: str | None = None,
-    message: str | None = None,
-    use_instead: str | None = None,
+    version: Union[str, None] = None,
+    after_version: Union[str, None] = None,
+    message: Union[str, None] = None,
+    use_instead: Union[str, None] = None,
     category: type[Warning] = FutureWarning,
-):
+)
     """Decorator to mark a function as deprecated
 
     Parameters
@@ -809,7 +809,7 @@ def _skip_doctest(line):
 def skip_doctest(doc):
     if doc is None:
         return ""
-    return "\n".join([_skip_doctest(line) for line in doc.split("\n")])
+    return "\n".join(_skip_doctest(line) for line in doc.split("\n"))
 
 
 def extra_titles(doc):
@@ -1200,7 +1200,7 @@ def asciitable(columns, rows):
     header = row_template % tuple(columns)
     bar = "+%s+" % "+".join("-" * (w + 2) for w in widths)
     data = "\n".join(row_template % r for r in rows)
-    return "\n".join([bar, header, bar, data, bar])
+    return "\n".join(bar, header, bar, data, bar)
 
 
 def put_lines(buf, lines):
@@ -2063,7 +2063,7 @@ def stringify(obj, exclusive: Iterable | None = None):
                     stringify(obj0.inkeys, exclusive),
                     obj0.name,
                 ),
-            ) + tuple(stringify(x, exclusive) for x in obj[1:])
+            ) + tuple(stringify(x, exclusive) for x in obj0[1:])
         elif callable(obj0):
             return (obj0,) + tuple(stringify(x, exclusive) for x in obj[1:])
 

@@ -33,7 +33,6 @@ from tlz.curried import pluck
 
 from dask import compute, config, core
 from dask.array import chunk
-from dask.array.chunk import getitem
 from dask.array.chunk_types import is_valid_array_chunk, is_valid_chunk_type
 
 # Keep einsum_lookup and tensordot_lookup here for backwards compatibility

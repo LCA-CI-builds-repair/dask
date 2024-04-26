@@ -28,9 +28,8 @@ def test_random_all_RandomState(backend, rs):
 
     def rnd_test(func, *args, **kwargs):
         a = func(*args, **kwargs)
-        assert type(a._meta) == expect
-        assert_eq(a, a)  # Check that _meta and computed arrays match types
-
+        assert isinstance(a._meta, expect)
+        assert a._meta is a.compute()  # Check that _meta and computed arrays match types
     with config.set({"array.backend": backend}):
         rs = da.random.RandomState(RandomState=rs)
 

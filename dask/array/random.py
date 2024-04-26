@@ -448,7 +448,6 @@ def default_rng(seed=None):
     <class 'numpy.int64'>
 
     Here we specify a seed so that we have reproducible results:
-
     >>> import dask.array as da
     >>> rng = da.random.default_rng(seed=42)
     >>> print(rng)
@@ -466,7 +465,7 @@ def default_rng(seed=None):
     >>> rng = da.random.default_rng(seed=42)
     >>> arr2 = rng.random((3, 3)).compute()
     >>> arr2
-    array([[0.91674416, 0.91098667, 0.8765925 ],
+    array([[0.91674416, 0.91098667, 0.8765925 ]])
            [0.30931841, 0.95465607, 0.17509458],
            [0.99662814, 0.75203348, 0.15038118]])
 
