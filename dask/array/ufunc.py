@@ -107,10 +107,10 @@ class ufunc:
         if len(dsks) > 0:
             for dsk in dsks:
                 result = dsk._elemwise(self._ufunc, *args, **kwargs)
-                if type(result) != type(NotImplemented):
+                if not isinstance(result, NotImplemented):
                     return result
             raise TypeError(
-                "Parameters of such types are not supported by " + self.__name__
+                f"Parameters of such types are not supported by {self.__name__}"
             )
         else:
             return self._ufunc(*args, **kwargs)

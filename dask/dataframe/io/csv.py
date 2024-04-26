@@ -336,13 +336,13 @@ def text_blocks_to_pandas(
     -------
     A dask.dataframe
     """
-    dtypes = head.dtypes.to_dict()
-    # dtypes contains only instances of CategoricalDtype, which causes issues
-    # in coerce_dtypes for non-uniform categories across partitions.
-    # We will modify `dtype` (which is inferred) to
-    # 1. contain instances of CategoricalDtypes for user-provided types
-    # 2. contain 'category' for data inferred types
     categoricals = head.select_dtypes(include=["category"]).columns
+    dtypes = head.dtypes.to_dict()
+    for col in categoricals:
+        dtypes[col] = CategoricalDtype()
+    for col in dtypes:
+        if not isinstance(dtypes[col], CategoricalDtype):
+            dtypes[col] = 'category'
 
     if isinstance(specified_dtypes, Mapping):
         known_categoricals = [

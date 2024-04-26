@@ -597,11 +597,11 @@ def get_apply_async(apply_async, num_workers, *args, **kwargs):
 
 
 def sortkey(item):
-    """Sorting key function that is robust to different types
+    """Sorting key function that maps different types to a comparable form
 
     Both strings and tuples are common key types in dask graphs.
-    However In Python 3 one can not compare strings with tuples directly.
-    This function maps many types to a form where they can be compared
+    However, in Python 3, strings and tuples cannot be compared directly.
+    This function maps various types to a form where they can be compared.
 
     Examples
     --------

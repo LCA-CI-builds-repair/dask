@@ -1729,8 +1729,6 @@ class Array(DaskMethodsMixin):
 
         # First, verify that all types are handled by Dask. Otherwise, return NotImplemented.
         if not all(
-            # Accept our own superclasses as recommended by NEP-13
-            # (https://numpy.org/neps/nep-0013-ufunc-overrides.html#subclass-hierarchies)
             issubclass(type(self), type_) or is_valid_chunk_type(type_)
             for type_ in types
         ):
