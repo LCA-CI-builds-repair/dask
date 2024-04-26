@@ -87,7 +87,7 @@ def read_sql_query(
         raise TypeError(
             "'con' must be of type str, not "
             + str(type(con))
-            + "Note: Dask does not support SQLAlchemy connectables here"
+            + ". Note: Dask does not support SQLAlchemy connectables here"
         )
     if index_col is None:
         raise ValueError("Must specify index column to partition on")
@@ -294,7 +294,7 @@ def read_sql_table(
         )
     if columns is not None:
         for col in columns:
-            if not isinstance(col, (sa.Column, str)):
+            if not isinstance(col, (str, sa.Column)):
                 raise TypeError(
                     "`columns` must be of type List[str], and cannot contain "
                     + str(type(col))

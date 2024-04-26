@@ -1132,11 +1132,9 @@ def test_reductions_non_numeric_dtypes():
 
     # ToDo: pandas supports timedelta std, otherwise dask raises:
     # TypeError: unsupported operand type(s) for *: 'float' and 'Timedelta'
-    # assert_eq(dds.mean(), pds.mean())
+    assert_eq(dds.mean(), pds.mean())
 
     assert_eq(dds.nunique(), pds.nunique())
-
-
 @pytest.mark.parametrize("split_every", [False, 2])
 def test_reductions_frame(split_every):
     dsk = {

@@ -33,8 +33,6 @@ def dispatch_property(prop_name):
         return getattr(self.arr, prop_name)
 
     return wrapped
-
-
 class EncapsulateNDArray(np.lib.mixins.NDArrayOperatorsMixin):
     """
     A class that "mocks" ndarray by encapsulating an ndarray and using

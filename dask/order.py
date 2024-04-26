@@ -45,7 +45,6 @@ the docstrings of tests in dask/tests/test_order.py.  These tests usually have
 graph types laid out very carefully to show the kinds of situations that often
 arise, and the order we would like to be determined.
 
-"""
 import copy
 from collections import defaultdict, deque, namedtuple
 from collections.abc import Iterable, Mapping, MutableMapping

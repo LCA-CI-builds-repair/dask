@@ -3735,7 +3735,7 @@ Dask Name: {name}, {layers}"""
 
     @derived_from(pd.Series)
     def dot(self, other, meta=no_default):
-        if not isinstance(other, _Frame):
+        if not isinstance(other, (_Frame, DataFrame)):
             raise TypeError("The second operand must be a dask array or dask dataframe")
 
         if isinstance(other, DataFrame):

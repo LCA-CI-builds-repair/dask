@@ -222,8 +222,6 @@ def check_if_handled_given_other(f):
             return f(self, other)
 
     return wrapper
-
-
 def slices_from_chunks(chunks):
     """Translate chunks tuple to a set of slices in product order
 
