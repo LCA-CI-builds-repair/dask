@@ -37,7 +37,7 @@ def register_chunk_type(type):
     * :py:class:`scipy.sparse.spmatrix`
 
     This function exists to append any other types to this registry. If a type is not
-    in this registry, and yet is a downcast type (it comes below
+    in this registry, and yet is a downcast type (it might
     :py:class:`dask.array.Array` in the type casting hierarchy), a ``TypeError`` will
     be raised due to all operand types returning ``NotImplemented``.
 

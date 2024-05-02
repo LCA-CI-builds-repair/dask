@@ -828,7 +828,6 @@ def extra_titles(doc):
             lines[i + 1] = lines[i + 1].replace("-" * len(title), "-" * len(new_title))
         else:
             seen.add(title)
-
     return "\n".join(lines)
 
 
@@ -1061,13 +1060,14 @@ def typename(typ: Any, short: bool = False) -> str:
         return typename(type(typ))
     try:
         if not typ.__module__ or typ.__module__ == "builtins":
+        if not typ.__module__ or typ.__module__ == "builtins":
             return typ.__name__
         else:
             if short:
                 module, *_ = typ.__module__.split(".")
             else:
                 module = typ.__module__
-            return module + "." + typ.__name__
+            return module
     except AttributeError:
         return str(typ)
 
@@ -1075,10 +1075,13 @@ def typename(typ: Any, short: bool = False) -> str:
 def ensure_bytes(s) -> bytes:
     """Attempt to turn `s` into bytes.
 
+def ensure_bytes(s) -> bytes:
+    """Attempt to turn `s` into bytes.
+
     Parameters
     ----------
     s : Any
-        The object to be converted. Will correctly handled
+        The object to be converted. Will correctly handle
         * str
         * bytes
         * objects implementing the buffer protocol (memoryview, ndarray, etc.)
@@ -1102,6 +1105,8 @@ def ensure_bytes(s) -> bytes:
     b'123'
     """
     if isinstance(s, bytes):
+        # Add implementation to handle conversion to bytes if required
+        pass
         return s
     elif hasattr(s, "encode"):
         return s.encode()
@@ -1112,17 +1117,34 @@ def ensure_bytes(s) -> bytes:
             raise TypeError(
                 f"Object {s} is neither a bytes object nor can be encoded to bytes"
             ) from e
-
-
 def ensure_unicode(s) -> str:
-    """Turn string or bytes to string
+    """Attempt to turn `s` into unicode.
 
+    Parameters
+    ----------
+    s : Any
+        The object to be converted. Will correctly handle
+        * str
+        * bytes
+
+    Returns
+    -------
+    u : str
+
+    Examples
+    --------
     >>> ensure_unicode('123')
     '123'
     >>> ensure_unicode(b'123')
     '123'
     """
     if isinstance(s, str):
+        return s
+    elif hasattr(s, "decode"):
+        return s.decode()
+    else:
+        # Add implementation to handle conversion to unicode if required
+        pass
         return s
     elif hasattr(s, "decode"):
         return s.decode()
@@ -1135,28 +1157,28 @@ def ensure_unicode(s) -> str:
             ) from e
 
 
-def digit(n, k, base):
-    """
-
-    >>> digit(1234, 0, 10)
-    4
-    >>> digit(1234, 1, 10)
-    3
-    >>> digit(1234, 2, 10)
-    2
-    >>> digit(1234, 3, 10)
-    1
-    """
-    return n // base**k % base
+    L[loc] = val
+    return tuple(L)
 
 
-def insert(tup, loc, val):
-    """
+def dependency_depth(dsk):
+    deps, _ = get_deps(dsk)
 
-    >>> insert(('a', 'b', 'c'), 0, 'x')
-    ('x', 'b', 'c')
-    """
-    L = list(tup)
+    @lru_cache(maxsize=None)
+    def max_depth_by_deps(key):
+        if not deps[key]:
+            return 1
+
+        d = 1 + max(max_depth_by_deps(dep_key) for dep_key in deps[key])
+        return d
+
+
+def memory_repr(num):
+    for x in ["bytes", "KB", "MB", "GB", "TB"]:
+        if num < 1024.0:
+            return f"{num:3.1f} {x}"
+        num /= 1024.0
+    return  # Add appropriate return value or statement
     L[loc] = val
     return tuple(L)
 
@@ -1180,18 +1202,16 @@ def memory_repr(num):
         if num < 1024.0:
             return f"{num:3.1f} {x}"
         num /= 1024.0
+_method_cache: dict[str, methodcaller] = {}
 
 
-def asciitable(columns, rows):
-    """Formats an ascii table for given columns and rows.
-
-    Parameters
-    ----------
-    columns : list
-        The column names
-    rows : list of tuples
-        The rows in the table. Each tuple must be the same length as
-        ``columns``.
+class methodcaller:
+    """
+    
+def put_lines(buf, lines):
+    if any(not isinstance(x, str) for x in lines):
+        lines = [str(x) for x in lines]
+    buf.write("\n".join(lines)
     """
     rows = [tuple(str(i) for i in r) for r in rows]
     columns = tuple(str(i) for i in columns)

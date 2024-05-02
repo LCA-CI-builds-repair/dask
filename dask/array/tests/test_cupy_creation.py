@@ -33,13 +33,13 @@ def test_diag():
     assert type(dx._meta) == cupy.ndarray
     assert_eq(dx, dx)  # Check that _meta and computed arrays match types
     assert_eq(da.diag(dx), cupy.diag(x))
-
+import cupy
+import pytest
 
 def test_diagonal():
     v = cupy.arange(11)
     with pytest.raises(ValueError):
         da.diagonal(v)
-
     v = cupy.arange(4).reshape((2, 2))
     with pytest.raises(ValueError):
         da.diagonal(v, axis1=0, axis2=0)
