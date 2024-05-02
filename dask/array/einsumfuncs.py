@@ -30,22 +30,28 @@ def parse_einsum_input(operands):
     which in itself is a reproduction of
     c side einsum parsing in python.
 
-    Returns
-    -------
-    input_strings : str
-        Parsed input strings
-    output_string : str
-        Parsed output string
-    operands : list of array_like
-        The operands to use in the numpy contraction
-    Examples
-    --------
-    The operand list is simplified to reduce printing:
-    >> a = np.random.rand(4, 4)
-    >> b = np.random.rand(4, 4, 4)
-    >> __parse_einsum_input(('...a,...a->...', a, b))
-    ('za,xza', 'xz', [a, b])
-    >> __parse_einsum_input((a, [Ellipsis, 0], b, [Ellipsis, 0]))
+    def __parse_einsum_input(*args):
+        input_strings = ''
+        output_string = ''
+        operands = []
+
+        for arg in args:
+            if isinstance(arg, str):
+                input_strings += arg + ',' if input_strings else arg
+                output_string += arg
+            elif isinstance(arg, (list, tuple)):
+                operands.extend(arg)
+            elif arg is Ellipsis:
+                input_strings += '...' + ','
+                output_string += '...'
+            elif arg is None:  # Handle cases where arg is None
+                input_strings += 'None' + ','
+                output_string += 'None'
+
+        if input_strings[-1] == ',':
+            input_strings = input_strings[:-1]
+
+        return input_strings, output_string, operands
     ('za,xza', 'xz', [a, b])
     """
 

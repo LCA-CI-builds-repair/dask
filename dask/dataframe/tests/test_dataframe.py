@@ -5922,13 +5922,13 @@ def test_dot():
     assert_eq(s1.dot(df), partitioned_s1.dot(partitioned_df))
 
     # Test passing meta kwarg
-    res = dask_s1.dot(dask_df, meta=pd.Series([1], name="test_series")).compute()
+    meta_series = pd.Series([1], name="test_series") if pd else None  # Handle None case for meta kwarg
+    res = dask_s1.dot(dask_df, meta=meta_series).compute()
     assert res.name == "test_series"
 
     # Test validation of second operand
     with pytest.raises(TypeError):
         dask_s1.dot(da.array([1, 2, 3, 4]))
-
 
 def test_dot_nan():
     # Test that nan inputs match pandas' behavior

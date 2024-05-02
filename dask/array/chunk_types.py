@@ -40,7 +40,6 @@ def register_chunk_type(type):
     in this registry, and yet is a downcast type (it comes below
     :py:class:`dask.array.Array` in the type casting hierarchy), a ``TypeError`` will
     be raised due to all operand types returning ``NotImplemented``.
-
     Examples
     --------
     Using a mock ``FlaggedArray`` class as an example chunk type unknown to Dask with
@@ -95,7 +94,6 @@ def register_chunk_type(type):
 
     However, once registered, Dask will be able to handle operations with this new
     type:
-
     >>> da.register_chunk_type(FlaggedArray)
     >>> x = da.ones(5) - FlaggedArray(np.ones(5), True)
     >>> x
