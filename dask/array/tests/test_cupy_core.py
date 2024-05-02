@@ -196,13 +196,16 @@ def test_view():
     assert_eq(result, result)  # Check that _meta and computed arrays match types
     assert_eq(result, x.view(), check_type=False)
 
+    from dask.array.utils import assert_eq
+    import cupy
+
     result = d.view("i4")
-    assert type(result._meta) == cupy.ndarray
+    assert isinstance(result._meta, cupy.ndarray)
     assert_eq(result, result)  # Check that _meta and computed arrays match types
     assert_eq(result, x.view("i4"), check_type=False)
 
     result = d.view("i2")
-    assert type(result._meta) == cupy.ndarray
+    assert isinstance(result._meta, cupy.ndarray)
     assert_eq(result, result)  # Check that _meta and computed arrays match types
     assert_eq(result, x.view("i2"), check_type=False)
     assert all(isinstance(s, int) for s in d.shape)

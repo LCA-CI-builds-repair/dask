@@ -20,11 +20,14 @@ def test_diag():
     assert_eq(dv, dv)  # Check that _meta and computed arrays match types
     assert_eq(da.diag(dv), cupy.diag(v))
 
+    from dask.array.utils import assert_eq
+    import cupy
+
     v = v + v + 3
     dv = dv + dv + 3
     darr = da.diag(dv)
     cupyarr = cupy.diag(v)
-    assert type(darr._meta) == cupy.ndarray
+    assert isinstance(darr._meta, cupy.ndarray)
     assert_eq(darr, darr)  # Check that _meta and computed arrays match types
     assert_eq(darr, cupyarr)
 
