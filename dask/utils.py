@@ -225,14 +225,13 @@ def _deprecated_kwarg(
         @wraps(func)
         def wrapper(*args, **kwargs) -> Callable[..., Any]:
             old_arg_value = kwargs.pop(old_arg_name, no_default)
-
             if old_arg_value is not no_default:
                 if new_arg_name is None:
                     msg = (
                         f"the {repr(old_arg_name)} keyword is deprecated and "
                         "will be removed in a future version. Please take "
-                        f"steps to stop the use of {repr(old_arg_name)}"
-                    ) + comment
+                        f"steps to stop the use of {repr(old_arg_name)}" + comment
+                    )
                     warnings.warn(msg, FutureWarning, stacklevel=stacklevel)
                     kwargs[old_arg_name] = old_arg_value
                     return func(*args, **kwargs)
@@ -243,6 +242,7 @@ def _deprecated_kwarg(
                     else:
                         new_arg_value = mapping.get(old_arg_value, old_arg_value)
                     msg = (
+                        f"the {old_arg_name}={repr(old_arg_value)} keyword is "
                         f"the {old_arg_name}={repr(old_arg_value)} keyword is "
                         "deprecated, use "
                         f"{new_arg_name}={repr(new_arg_value)} instead."
@@ -270,7 +270,6 @@ def _deprecated_kwarg(
 
 
 def deepmap(func, *seqs):
-    """Apply function inside nested lists
 
     >>> inc = lambda x: x + 1
     >>> deepmap(inc, [[1, 2], [3, 4]])
