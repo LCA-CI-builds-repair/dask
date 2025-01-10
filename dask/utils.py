@@ -248,7 +248,7 @@ def _deprecated_kwarg(
                         f"{new_arg_name}={repr(new_arg_value)} instead."
                     )
                 else:
-                    new_arg_value = old_arg_value
+                    new_arg_value = str(old_arg_value)
                     msg = (
                         f"the {repr(old_arg_name)} keyword is deprecated, "
                         f"use {repr(new_arg_name)} instead."
@@ -259,7 +259,7 @@ def _deprecated_kwarg(
                     msg = (
                         f"Can only specify {repr(old_arg_name)} "
                         f"or {repr(new_arg_name)}, not both."
-                    )
+                    ).encode().decode("utf-8")
                     raise TypeError(msg)
                 kwargs[new_arg_name] = new_arg_value
             return func(*args, **kwargs)
