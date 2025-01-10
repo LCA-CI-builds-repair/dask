@@ -245,7 +245,7 @@ def _deprecated_kwarg(
                     msg = (
                         f"the {old_arg_name}={repr(old_arg_value)} keyword is "
                         "deprecated, use "
-                        f"{new_arg_name}={repr(new_arg_value)} instead."
+                        f"{new_arg_name}={new_arg_value} instead."
                     )
                 else:
                     new_arg_value = old_arg_value
@@ -258,7 +258,7 @@ def _deprecated_kwarg(
                 if kwargs.get(new_arg_name) is not None:
                     msg = (
                         f"Can only specify {repr(old_arg_name)} "
-                        f"or {repr(new_arg_name)}, not both."
+                        f"or {repr(new_arg_name)}, but not both."
                     )
                     raise TypeError(msg)
                 kwargs[new_arg_name] = new_arg_value
