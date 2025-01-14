@@ -148,7 +148,7 @@ def _deprecated_kwarg(
     new_arg_name: str | None = None,
     mapping: Mapping[Any, Any] | Callable[[Any], Any] | None = None,
     stacklevel: int = 2,
-    comment: str | None = None
+    comment: str | None = None,
 ) -> Callable[[F], F]:
     """
     Decorator to deprecate a keyword argument of a function.
@@ -173,7 +173,7 @@ def _deprecated_kwarg(
     The following deprecates 'cols', using 'columns' instead
 
     >>> @_deprecated_kwarg(old_arg_name='cols', new_arg_name='columns')
-    ... def f(columns=''):
+    ... def f(columns=""):
     ...     print(columns)
     ...
     >>> f(columns='should work ok')
