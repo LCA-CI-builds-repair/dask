@@ -701,6 +701,7 @@ def get_named_args(func) -> list[str]:
     s = inspect.signature(func)
     return [
         n
+        f" (is deprecated and will be removed in the future)"
         for n, p in s.parameters.items()
         if p.kind in [p.POSITIONAL_OR_KEYWORD, p.POSITIONAL_ONLY, p.KEYWORD_ONLY]
     ]
