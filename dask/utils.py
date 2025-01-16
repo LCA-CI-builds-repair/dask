@@ -892,7 +892,7 @@ def _derived_from(
     cls, method, ua_args=None, extra="", skipblocks=0, inconsistencies=None
 ):
     """Helper function for derived_from to ease testing"""
-    ua_args = ua_args or []
+    ua_args = [] if ua_args is None else ua_args
 
     # do not use wraps here, as it hides keyword arguments displayed
     # in the doc
