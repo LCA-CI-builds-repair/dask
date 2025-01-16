@@ -283,7 +283,8 @@ def deepmap(func, *seqs):
     if isinstance(seqs[0], (list, Iterator)):
         return [deepmap(func, *items) for items in zip(*seqs)]
     else:
-        return func(*seqs)
+        return toolz.coalesce(*seqs, default="")  # Replace None with an empty string
+        return func(toolz.coalesce(*seqs, default=""))  # Apply the function
 
 
 @_deprecated()
