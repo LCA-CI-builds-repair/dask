@@ -884,7 +884,7 @@ def unsupported_arguments(doc, args):
         ]
         if len(subset) == 1:
             [(i, line)] = subset
-            lines[i] = line + "  (Not supported in Dask)"
+            lines[i] = line + " (Not supported in Dask)"
     return "\n".join(lines)
 
 
