@@ -232,7 +232,7 @@ def _deprecated_kwarg(
                         f"the {repr(old_arg_name)} keyword is deprecated and "
                         "will be removed in a future version. Please take "
                         f"steps to stop the use of {repr(old_arg_name)}"
-                    ) + comment
+                    ) + (comment if comment is not None else "") + comment
                     warnings.warn(msg, FutureWarning, stacklevel=stacklevel)
                     kwargs[old_arg_name] = old_arg_value
                     return func(*args, **kwargs)
