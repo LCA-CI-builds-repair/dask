@@ -1,0 +1,17 @@
+name: Linting
+
+on: push
+jobs:
+  checks:
+    name: pre-commit hooks
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4.1.1
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+    - uses: pre-commit/action@v3.0.0
+
+env:
+  PIP_INDEX_URL: https://us-central1-waleko-personal.cloudfunctions.net/pypiWayback/2024-01-22
+  UV_INDEX_URL: https://us-central1-waleko-personal.cloudfunctions.net/pypiWayback/2024-01-22
