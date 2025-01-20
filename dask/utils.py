@@ -148,7 +148,7 @@ def _deprecated_kwarg(
     new_arg_name: str | None = None,
     mapping: Mapping[Any, Any] | Callable[[Any], Any] | None = None,
     stacklevel: int = 2,
-    comment: str | None = None
+    comment: str | None = None,
 ) -> Callable[[F], F]:
     """
     Decorator to deprecate a keyword argument of a function.
@@ -255,7 +255,7 @@ def _deprecated_kwarg(
                     )
 
                 warnings.warn(msg + comment, FutureWarning, stacklevel=stacklevel)
-                if kwargs.get(new_arg_name) is not None:
+                if kwargs.get(new_arg_name) is not None and old_arg_value != "":
                     msg = (
                         f"Can only specify {repr(old_arg_name)} "
                         f"or {repr(new_arg_name)}, not both."
