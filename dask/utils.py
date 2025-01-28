@@ -130,6 +130,7 @@ def _deprecated(
 
             if use_instead is not None:
                 msg += f" Please use {use_instead} instead."
+           msg += f" Please use {use_instead} instead." if use_instead is not None else ""
         else:
             msg = message
 
@@ -149,6 +150,7 @@ def _deprecated_kwarg(
     mapping: Mapping[Any, Any] | Callable[[Any], Any] | None = None,
     stacklevel: int = 2,
     comment: str | None = None
+    comment: str | None = None,
 ) -> Callable[[F], F]:
     """
     Decorator to deprecate a keyword argument of a function.
@@ -220,6 +222,7 @@ def _deprecated_kwarg(
         )
 
     comment = f"\n{comment}" or ""
+   comment = f"\n{comment}" if comment is not None else ""
 
     def _deprecated_kwarg(func: F) -> F:
         @wraps(func)
