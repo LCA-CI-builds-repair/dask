@@ -857,7 +857,7 @@ def ignore_warning(doc, cls, name, extra="", skipblocks=0, inconsistencies=None)
             tail = tail[i + 2 :]
             skipblocks -= 1
         # Indentation of next line
-        indent = re.match(r"\s*", tail).group(0)
+        indent = re.match(r"\s*", tail).group(0) if tail else ""
         # Insert the warning, indented, with a blank line before and after
         if extra:
             more = [indent, extra.rstrip("\n") + "\n\n"]
