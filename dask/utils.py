@@ -867,7 +867,7 @@ def ignore_warning(doc, cls, name, extra="", skipblocks=0, inconsistencies=None)
             l3 = f"Known inconsistencies: \n {inconsistencies}"
             bits = [head, indent, l1, l2, "\n\n", l3, "\n\n"] + more + [tail]
         else:
-            bits = [head, indent, l1, indent, l2, "\n\n"] + more + [tail]
+            bits = [head, indent, l1, indent, l2, "\n\n"] + (more or []) + [tail]
         doc = "".join(bits)
 
     return doc
@@ -1770,7 +1770,7 @@ def format_time_ago(n: datetime) -> str:
         if dur > 0:
             if dur == 1:  # De-pluralize
                 unit = unit[:-1]
-            return f"{dur} {unit} ago"
+            return f"{dur} {unit or ''} ago"
     return "Just now"
 
 
