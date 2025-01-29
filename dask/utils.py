@@ -250,7 +250,7 @@ def _deprecated_kwarg(
                 else:
                     new_arg_value = old_arg_value
                     msg = (
-                        f"the {repr(old_arg_name)} keyword is deprecated, "
+                        f"the {old_arg_name!r} keyword is deprecated, "
                         f"use {repr(new_arg_name)} instead."
                     )
 
