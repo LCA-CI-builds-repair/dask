@@ -217,9 +217,9 @@ def _deprecated_kwarg(
     if mapping is not None and not hasattr(mapping, "get") and not callable(mapping):
         raise TypeError(
             "mapping from old to new argument values must be dict or callable!"
-        )
+        ) 
 
-    comment = f"\n{comment}" or ""
+    comment = f"\n{comment}" if comment else ""
 
     def _deprecated_kwarg(func: F) -> F:
         @wraps(func)
@@ -232,7 +232,7 @@ def _deprecated_kwarg(
                         f"the {repr(old_arg_name)} keyword is deprecated and "
                         "will be removed in a future version. Please take "
                         f"steps to stop the use of {repr(old_arg_name)}"
-                    ) + comment
+                    ) + (comment or "")
                     warnings.warn(msg, FutureWarning, stacklevel=stacklevel)
                     kwargs[old_arg_name] = old_arg_value
                     return func(*args, **kwargs)
