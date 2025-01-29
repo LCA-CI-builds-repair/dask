@@ -148,7 +148,7 @@ def _deprecated_kwarg(
     new_arg_name: str | None = None,
     mapping: Mapping[Any, Any] | Callable[[Any], Any] | None = None,
     stacklevel: int = 2,
-    comment: str | None = None
+    comment: str | None = None,
 ) -> Callable[[F], F]:
     """
     Decorator to deprecate a keyword argument of a function.
@@ -219,7 +219,7 @@ def _deprecated_kwarg(
             "mapping from old to new argument values must be dict or callable!"
         )
 
-    comment = f"\n{comment}" or ""
+    comment_str = f"\n{comment}" if comment else ""
 
     def _deprecated_kwarg(func: F) -> F:
         @wraps(func)
@@ -231,8 +231,8 @@ def _deprecated_kwarg(
                     msg = (
                         f"the {repr(old_arg_name)} keyword is deprecated and "
                         "will be removed in a future version. Please take "
-                        f"steps to stop the use of {repr(old_arg_name)}"
-                    ) + comment
+                        f"steps to stop the use of {repr(old_arg_name)}" +
+                        comment_str)
                     warnings.warn(msg, FutureWarning, stacklevel=stacklevel)
                     kwargs[old_arg_name] = old_arg_value
                     return func(*args, **kwargs)
@@ -847,7 +847,7 @@ def ignore_warning(doc, cls, name, extra="", skipblocks=0, inconsistencies=None)
     l2 = "Some inconsistencies with the Dask version may exist."
 
     i = doc.find("\n\n")
-    if i != -1:
+    if i != -1:  # Has at least one blank line
         # Insert our warning
         head = doc[: i + 2]
         tail = doc[i + 2 :]
