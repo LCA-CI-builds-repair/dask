@@ -219,7 +219,7 @@ def _deprecated_kwarg(
             "mapping from old to new argument values must be dict or callable!"
         )
 
-    comment = f"\n{comment}" or ""
+    comment = f"\n{comment}" if comment else ""
 
     def _deprecated_kwarg(func: F) -> F:
         @wraps(func)
@@ -246,7 +246,7 @@ def _deprecated_kwarg(
                         f"the {old_arg_name}={repr(old_arg_value)} keyword is "
                         "deprecated, use "
                         f"{new_arg_name}={repr(new_arg_value)} instead."
-                    )
+                    ) + comment
                 else:
                     new_arg_value = old_arg_value
                     msg = (
