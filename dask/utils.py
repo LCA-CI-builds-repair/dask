@@ -147,8 +147,7 @@ def _deprecated_kwarg(
     old_arg_name: str,
     new_arg_name: str | None = None,
     mapping: Mapping[Any, Any] | Callable[[Any], Any] | None = None,
-    stacklevel: int = 2,
-    comment: str | None = None
+    stacklevel: int = 2
 ) -> Callable[[F], F]:
     """
     Decorator to deprecate a keyword argument of a function.
@@ -165,8 +164,6 @@ def _deprecated_kwarg(
         new arguments. A callable must do its own value checking;
         values not found in a dict will be forwarded unchanged.
     comment :  str, optional
-        Additional message to deprecation message. Useful to pass
-        on suggestions with the deprecation warning.
 
     Examples
     --------
@@ -219,8 +216,6 @@ def _deprecated_kwarg(
             "mapping from old to new argument values must be dict or callable!"
         )
 
-    comment = f"\n{comment}" or ""
-
     def _deprecated_kwarg(func: F) -> F:
         @wraps(func)
         def wrapper(*args, **kwargs) -> Callable[..., Any]:
@@ -228,7 +223,7 @@ def _deprecated_kwarg(
 
             if old_arg_value is not no_default:
                 if new_arg_name is None:
-                    msg = (
+                    msg = (\
                         f"the {repr(old_arg_name)} keyword is deprecated and "
                         "will be removed in a future version. Please take "
                         f"steps to stop the use of {repr(old_arg_name)}"
@@ -245,7 +240,7 @@ def _deprecated_kwarg(
                     msg = (
                         f"the {old_arg_name}={repr(old_arg_value)} keyword is "
                         "deprecated, use "
-                        f"{new_arg_name}={repr(new_arg_value)} instead."
+                        f"{new_arg_name}={repr(new_arg_value)} instead."\
                     )
                 else:
                     new_arg_value = old_arg_value
@@ -253,7 +248,7 @@ def _deprecated_kwarg(
                         f"the {repr(old_arg_name)} keyword is deprecated, "
                         f"use {repr(new_arg_name)} instead."
                     )
-
+                    
                 warnings.warn(msg + comment, FutureWarning, stacklevel=stacklevel)
                 if kwargs.get(new_arg_name) is not None:
                     msg = (
