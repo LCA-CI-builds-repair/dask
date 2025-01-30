@@ -219,7 +219,7 @@ def _deprecated_kwarg(
             "mapping from old to new argument values must be dict or callable!"
         )
 
-    comment = f"\n{comment}" or ""
+    comment = f"\n{comment}" if comment is not None else ""
 
     def _deprecated_kwarg(func: F) -> F:
         @wraps(func)
