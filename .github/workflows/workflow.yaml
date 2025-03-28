@@ -1,0 +1,22 @@
+name: Linting
+
+on: push
+jobs:
+  checks:
+    name: pre-commit hooks
+    runs-on: ubuntu-latest
+    services:
+      pypi_wayback:
+        image: ghcr.io/waleko/pypi-wayback
+        ports:
+        - 8629:8080
+    steps:
+    - uses: actions/checkout@v4.1.1
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+    - uses: pre-commit/action@v3.0.0
+
+env:
+  PIP_INDEX_URL: http://localhost:8629/2024-01-22
+  UV_INDEX_URL: http://localhost:8629/2024-01-22
