@@ -148,7 +148,7 @@ def _deprecated_kwarg(
     new_arg_name: str | None = None,
     mapping: Mapping[Any, Any] | Callable[[Any], Any] | None = None,
     stacklevel: int = 2,
-    comment: str | None = None
+    comment: str | None = None,
 ) -> Callable[[F], F]:
     """
     Decorator to deprecate a keyword argument of a function.
